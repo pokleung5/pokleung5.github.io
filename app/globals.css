@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground font-sans relative overflow-x-hidden;
+  background-color: #050505;
+}
+
+footer {
+  @apply mt-24
+}
+
+section {
+  @apply mx-auto w-full max-w-6xl px-4 pt-24 sm:px-8;
+}
+
+section[data-full-width] {
+  @apply mx-0 max-w-none px-0 sm:px-0;
+}
+
+::selection {
+  @apply bg-foreground/10 text-foreground;
+}
+
+.gradient-text {
+  background: linear-gradient(120deg, #f5f5f6 0%, #b8b8bd 45%, #4b5563 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+}

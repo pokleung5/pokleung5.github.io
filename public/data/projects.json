@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Cruise Upsell Experience",
+    "category": "Commerce",
+    "tagline": "Responsive add-on journeys for international cruise partners.",
+    "description": "Re-architected ancillary sales flows at Plusgrade so merchandising teams can launch targeted offers without code changes.",
+    "technologies": ["React", "TypeScript", "Micro-frontend", "GraphQL"],
+    "highlight": "Helped launch upsell programs across multiple cruise brands, unlocking new ancillary revenue streams."
+  },
+  {
+    "name": "Global Payments Hub",
+    "category": "Platform",
+    "tagline": "Unified gateway integrations with centralized payment logic.",
+    "description": "Integrated and maintained multi-gateway payment support to deliver localized, PCI-compliant checkouts.",
+    "technologies": ["Spring Boot", "Java", "Payment APIs", "PostgreSQL"],
+    "highlight": "Reduced third-party processor reliance by bringing core payment orchestration in-house."
+  },
+  {
+    "name": "Dec Future Delivery Cadence",
+    "category": "Product Delivery",
+    "tagline": "Lightweight product operations for a remote SaaS team.",
+    "description": "Established agile rituals, requirement templates, and documentation standards to align design, backend, and product stakeholders.",
+    "technologies": ["Notion", "Linear", "Figma", "Product Analytics"],
+    "highlight": "Shortened discovery-to-delivery cycles by clarifying scope and ownership for each release."
+  },
+  {
+    "name": "Amino Device SDK Toolkit",
+    "category": "Platform",
+    "tagline": "Developer tools for set-top box partners and vendors.",
+    "description": "Authored JavaScript SDKs and REST endpoints that chipset vendors and partners use to integrate with Amino OS.",
+    "technologies": ["JavaScript", "React", "REST APIs", "Embedded Tooling"],
+    "highlight": "Improved integration reliability while extending Amino OS to both AOSP and RDK ecosystems."
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Software Engineer",
+    "company": "Plusgrade",
+    "period": "October 2022 — Present",
+    "description": "Lead full-stack delivery for cruise and travel commerce upsell flows, bridging product goals with scalable engineering execution.",
+    "focus": "Commerce Upsell & Micro-Frontend Platform",
+    "highlights": [
+      "Shipped dynamic add-on and upgrade journeys adopted by multiple global cruise lines.",
+      "Rolled out a micro-frontend architecture that lets product teams ship independently without regressions.",
+      "Integrated and maintained global payment gateways, securing localized checkouts for international markets.",
+      "Co-created an internal payment platform that reduced reliance on third-party processors."
+    ],
+    "tools": ["React", "TypeScript", "Spring Boot", "Micro-frontend"]
+  },
+  {
+    "title": "Product Manager",
+    "company": "Dec Future Inc",
+    "period": "November 2024 — September 2025",
+    "description": "Balanced product strategy and technical feasibility for early-stage SaaS initiatives while mentoring junior engineers.",
+    "focus": "Delivery Leadership & Cross-functional Alignment",
+    "highlights": [
+      "Translated discovery insights into prioritized roadmaps and clearly scoped engineering backlogs.",
+      "Mentored new graduates on agile planning, documentation, and release readiness.",
+      "Facilitated handoffs between design and backend teams to keep feature delivery on track."
+    ],
+    "tools": ["Product Discovery", "Agile Facilitation", "Notion", "Linear"]
+  },
+  {
+    "title": "Graduate Engineer",
+    "company": "Amino Communications",
+    "period": "August 2020 — May 2022",
+    "description": "Built embedded and web experiences for set-top box platforms while collaborating with chipset vendors and partner teams.",
+    "focus": "Frontend Engineering & Device Performance",
+    "highlights": [
+      "Developed responsive interfaces in Vanilla JS and React for both web and embedded contexts.",
+      "Authored SDKs and REST APIs used by client integrators and third-party partners.",
+      "Diagnosed memory leaks and race conditions to improve wake-up reliability across devices.",
+      "Supported integration of Amino OS with Android Open Source Project (AOSP) and RDK."
+    ],
+    "tools": ["React", "JavaScript", "REST APIs", "Embedded Systems"]
+  },
+  {
+    "title": "Assistant Software Engineer",
+    "company": "IT Channel (Asia) Limited",
+    "period": "July 2019 — April 2020",
+    "description": "Supported data and analytics initiatives across client engagements, turning raw data into actionable dashboards.",
+    "focus": "Data Pipelines & Business Intelligence",
+    "highlights": [
+      "Prototyped Power BI dashboards that guided client decision-making.",
+      "Automated web scraping and data preprocessing to accelerate market research.",
+      "Migrated legacy ETL jobs from Oracle DB to IBM DB2, improving performance and maintainability.",
+      "Assisted senior engineers with reporting automation for recurring analytics deliverables."
+    ],
+    "tools": ["Power BI", "Python", "ETL Pipelines", "Oracle DB", "IBM DB2"]
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "metric": "3x launch velocity",
+    "label": "Upsell Experiments",
+    "description": "Introduced a micro-frontend shell and content tooling so Plusgrade merchandising teams can publish new offers without engineering sprints."
+  },
+  {
+    "metric": "5 payment gateways",
+    "label": "Global Coverage",
+    "description": "Integrated and maintained multi-PSP support, keeping checkout experiences compliant and localized across regions."
+  },
+  {
+    "metric": "11 mentees",
+    "label": "Team Enablement",
+    "description": "Mentored junior engineers and new graduates at Dec Future Inc., pairing documentation with agile rituals to level up delivery skills."
+  }
+]

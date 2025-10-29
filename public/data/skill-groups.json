@@ -1,0 +1,118 @@
+[
+  {
+    "label": "Frontend & Web",
+    "tagline": "Modern web experiences for commerce and media.",
+    "summary": "React and TypeScript anchor the UI layer, with micro-frontend patterns enabling independent deployments for partner teams.",
+    "strengths": [
+      "Builds modular React applications that can be embedded across partner platforms.",
+      "Pairs design systems with performance budgets to keep experiences fast and accessible.",
+      "Bridges marketing asks with engineering constraints to launch revenue-driving journeys."
+    ],
+    "items": [
+      {
+        "name": "React",
+        "emphasis": true,
+        "description": "Component systems, state architecture, and testing strategy."
+      },
+      {
+        "name": "TypeScript",
+        "description": "Typed surfaces that improve developer experience and reliability."
+      },
+      {
+        "name": "Micro-frontend",
+        "description": "Composable shell + module architecture for multi-team delivery."
+      },
+      {
+        "name": "GraphQL",
+        "description": "Contracts that let product teams iterate without backend bottlenecks."
+      }
+    ]
+  },
+  {
+    "label": "Platform & Services",
+    "tagline": "Stable services powering secure transactions.",
+    "summary": "Spring Boot and REST APIs underpin payment orchestration and upsell logic across international markets.",
+    "strengths": [
+      "Designs resilient payment flows with graceful degradation and observability.",
+      "Introduces API governance and documentation that shorten onboarding time.",
+      "Supports hybrid architectures that mix legacy systems with new services."
+    ],
+    "items": [
+      {
+        "name": "Spring Boot",
+        "emphasis": true,
+        "description": "Payment orchestration and partner integrations."
+      },
+      {
+        "name": "REST APIs",
+        "description": "Versioned endpoints with clear contracts and monitoring."
+      },
+      {
+        "name": "Payment Gateways",
+        "description": "Adyen, Worldpay, and custom PSP integrations."
+      },
+      {
+        "name": "PostgreSQL",
+        "description": "Schema design and data modeling for transaction workflows."
+      }
+    ]
+  },
+  {
+    "label": "Product & Delivery",
+    "tagline": "Shipping the right thing, not just the thing.",
+    "summary": "Product discovery, agile rituals, and crisp documentation keep teams aligned from research to release.",
+    "strengths": [
+      "Turns fuzzy requirements into prioritized backlogs and actionable slices.",
+      "Facilitates cross-functional planning between design, backend, and stakeholders.",
+      "Mentors junior developers on communication, scope management, and delivery readiness."
+    ],
+    "items": [
+      {
+        "name": "Product Discovery",
+        "emphasis": true,
+        "description": "Workshops, user interviews, and scope definition."
+      },
+      {
+        "name": "Agile Facilitation",
+        "description": "Sprint rituals, retrospectives, and dependency clearing."
+      },
+      {
+        "name": "Technical Writing",
+        "description": "PRDs, runbooks, and integration guides."
+      },
+      {
+        "name": "Stakeholder Alignment",
+        "description": "Bridging product goals with engineering trade-offs."
+      }
+    ]
+  },
+  {
+    "label": "Data & Insights",
+    "tagline": "Analytics that surface signal from noise.",
+    "summary": "Power BI, Python, and ETL foundations power reporting, experimentation, and operational dashboards.",
+    "strengths": [
+      "Builds repeatable pipelines that keep reporting accurate and timely.",
+      "Automates research workflows to unblock marketing and operations teams.",
+      "Collaborates with analysts to tie metrics back to product outcomes."
+    ],
+    "items": [
+      {
+        "name": "Power BI",
+        "emphasis": true,
+        "description": "Interactive dashboards for executive and client reporting."
+      },
+      {
+        "name": "Python",
+        "description": "Data wrangling, automation, and integration scripts."
+      },
+      {
+        "name": "ETL Pipelines",
+        "description": "Designing resilient data flows across Oracle and DB2."
+      },
+      {
+        "name": "SQL",
+        "description": "Analytical queries and schema migrations."
+      }
+    ]
+  }
+]
