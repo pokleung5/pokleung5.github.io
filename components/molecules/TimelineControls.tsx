@@ -3,9 +3,13 @@ type TimelineControlsProps = {
   totalCount: number;
   onShowMore: () => void;
   onCollapse: () => void;
+  labels: {
+    showMore: string;
+    collapse: string;
+  };
 };
 
-export function TimelineControls({ visibleCount, totalCount, onShowMore, onCollapse }: TimelineControlsProps) {
+export function TimelineControls({ visibleCount, totalCount, onShowMore, onCollapse, labels }: TimelineControlsProps) {
   return (
     <>
       {visibleCount < totalCount && (
@@ -15,7 +19,7 @@ export function TimelineControls({ visibleCount, totalCount, onShowMore, onColla
             onClick={onShowMore}
             className="rounded-full border border-white/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-foreground/60 transition hover:border-foreground/40 hover:text-foreground"
           >
-            Show earlier roles
+            {labels.showMore}
           </button>
         </div>
       )}
@@ -26,7 +30,7 @@ export function TimelineControls({ visibleCount, totalCount, onShowMore, onColla
             onClick={onCollapse}
             className="rounded-full border border-white/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-foreground/60 transition hover:border-foreground/40 hover:text-foreground"
           >
-            Collapse roles
+            {labels.collapse}
           </button>
         </div>
       )}

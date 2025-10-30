@@ -1,26 +1,30 @@
 import Link from 'next/link';
 import { Github, Linkedin, Mail } from 'lucide-react';
+import { getTranslations, type Locale } from '@/lib/i18n';
 
-const footerLinks = [
-  { label: 'GitHub', href: 'https://github.com/pokleung5', Icon: Github },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/pokleung5/', Icon: Linkedin },
-  { label: 'Email', href: 'mailto:hello@ericleung.dev', Icon: Mail }
-];
+type SiteFooterProps = {
+  locale?: Locale;
+};
 
-export function SiteFooter() {
+export function SiteFooter({ locale = 'en' }: SiteFooterProps = {}) {
+  const footerCopy = getTranslations(locale).footer;
+  const socialLinks = [
+    { label: footerCopy.links.github, href: 'https://github.com/pokleung5', Icon: Github },
+    { label: footerCopy.links.linkedin, href: 'https://www.linkedin.com/in/pokleung5/', Icon: Linkedin },
+    { label: footerCopy.links.email, href: 'mailto:hello@ericleung.dev', Icon: Mail }
+  ];
   const currentYear = new Date().getFullYear();
+  const craftedWith = footerCopy.craftedWith.replace('{year}', String(currentYear));
 
   return (
     <footer className="border-t border-white/10 bg-black/30">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-14 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.35em] text-foreground/40">Eric Leung</p>
-          <p className="text-sm text-foreground/70 sm:max-w-sm">
-            Building reliable commerce platforms through calm engineering leadership.
-          </p>
+          <p className="text-xs uppercase tracking-[0.35em] text-foreground/40">{footerCopy.label}</p>
+          <p className="text-sm text-foreground/70 sm:max-w-sm">{footerCopy.tagline}</p>
         </div>
         <div className="flex items-center gap-3">
-          {footerLinks.map(({ label, href, Icon }) => (
+          {socialLinks.map(({ label, href, Icon }) => (
             <Link
               key={label}
               href={href}
@@ -36,7 +40,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-white/10 py-6">
         <p className="mx-auto max-w-6xl px-4 text-[0.68rem] uppercase tracking-[0.32em] text-foreground/35 sm:px-8">
-          Crafted with Next.js & Tailwind · © {currentYear} Eric Leung
+          {craftedWith}
         </p>
       </div>
     </footer>

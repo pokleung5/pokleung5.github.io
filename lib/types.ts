@@ -47,10 +47,26 @@ export type Testimonial = {
   quote: string;
 };
 
+export type ContactCopy = {
+  eyebrow?: string;
+  title: string;
+  description: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  emailLabel: string;
+  emailPlaceholder: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  submitLabel: string;
+  submittedLabel: string;
+  statusMessage: string;
+};
+
 export type PortfolioData = {
   experiences: Experience[];
   projects: Project[];
   skillGroups: SkillGroup[];
   impactHighlights: ImpactHighlight[];
   testimonials: Testimonial[];
+  contact?: ContactCopy;
 };

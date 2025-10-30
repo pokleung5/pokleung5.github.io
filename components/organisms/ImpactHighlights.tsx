@@ -1,30 +1,44 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SectionHeader } from '@/components/molecules';
-import type { ImpactHighlight } from '@/lib/types';
 import { fadeInUp, staggerChildren } from '@/lib/animations';
+import { fetchLocalizedJson } from '@/lib/data';
+import { getTranslations, type Locale } from '@/lib/i18n';
+import type { ImpactHighlight } from '@/lib/types';
 
-export function ImpactHighlights() {
+type ImpactHighlightsProps = {
+  locale?: Locale;
+};
+
+export function ImpactHighlights({ locale = 'en' }: ImpactHighlightsProps = {}) {
+  const impactCopy = useMemo(() => getTranslations(locale).impactHighlights, [locale]);
   const [highlights, setHighlights] = useState<ImpactHighlight[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
+    let cancelled = false;
 
     const loadHighlights = async () => {
+      setIsLoading(true);
+      setError(null);
       try {
-        const response = await fetch('data/impact-highlights.json');
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-        const payload = (await response.json()) as ImpactHighlight[];
-        if (isMounted) {
+        const payload = await fetchLocalizedJson<ImpactHighlight[]>('impact-highlights.json', locale);
+        if (!cancelled) {
           setHighlights(payload);
         }
-      } catch (error) {
+      } catch (err) {
+        if (!cancelled) {
+          setError(impactCopy.error);
+        }
         if (process.env.NODE_ENV !== 'production') {
-          console.error('Failed to load impact highlights', error);
+          console.error('Failed to load impact highlights', err);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
         }
       }
     };
@@ -32,9 +46,17 @@ export function ImpactHighlights() {
     loadHighlights();
 
     return () => {
-      isMounted = false;
+      cancelled = true;
     };
-  }, []);
+  }, [impactCopy, locale]);
+
+  if (isLoading) {
+    return <ImpactHighlightsSkeleton />;
+  }
+
+  if (error) {
+    return <ImpactHighlightsSkeleton message={error} />;
+  }
 
   return (
     <section id="impact" className="py-4">
@@ -47,10 +69,10 @@ export function ImpactHighlights() {
       >
         <SectionHeader
           align="center"
-          eyebrow="Impact Snapshots"
-          title="Metrics that tell the delivery story."
+          eyebrow={impactCopy.eyebrow}
+          title={impactCopy.title}
           titleProps={{ className: 'mt-4' }}
-          description="Highlights from commerce launches and product leadership—pulled from partner retros, revenue reports, and team feedback loops."
+          description={impactCopy.description}
           descriptionProps={{ className: 'mx-auto mt-3 max-w-2xl' }}
         />
       </motion.div>
@@ -79,6 +101,34 @@ export function ImpactHighlights() {
           </motion.li>
         ))}
       </motion.ul>
+    </section>
+  );
+}
+
+function ImpactHighlightsSkeleton({ message }: { message?: string } = {}) {
+  return (
+    <section id="impact" className="py-4">
+      <div className="text-center">
+        <div className="mx-auto mb-6 h-4 w-40 animate-pulse rounded-full bg-white/10" />
+        <div className="mx-auto mb-4 h-8 w-72 animate-pulse rounded-full bg-white/5" />
+        <div className="mx-auto h-16 w-full max-w-2xl animate-pulse rounded-3xl bg-white/5" />
+      </div>
+      <div className="mt-8 grid gap-8 sm:mt-12 sm:gap-10 md:grid-cols-3">
+        {[...Array(3)].map((_, index) => (
+          <div
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
+            className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur"
+          >
+            <div className="flex h-full flex-col gap-4">
+              <span className="h-3 w-24 animate-pulse rounded-full bg-white/10" />
+              <span className="h-8 w-32 animate-pulse rounded-full bg-white/10" />
+              <span className="h-20 w-full animate-pulse rounded-3xl bg-white/5" />
+            </div>
+          </div>
+        ))}
+      </div>
+      {message ? <p className="mt-6 text-center text-xs text-foreground/50">{message}</p> : null}
     </section>
   );
 }

@@ -5,27 +5,41 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { AnimatedBackground } from '@/components/molecules';
 import { fadeInUp, staggerChildren } from '@/lib/animations';
+import { fetchLocalizedJson } from '@/lib/data';
+import { getTranslations, type Locale } from '@/lib/i18n';
 import type { SkillGroup } from '@/lib/types';
 
-export function Hero() {
+type HeroProps = {
+  locale?: Locale;
+};
+
+export function Hero({ locale = 'en' }: HeroProps = {}) {
+  const heroCopy = useMemo(() => getTranslations(locale).hero, [locale]);
   const [skillGroups, setSkillGroups] = useState<SkillGroup[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
+    let cancelled = false;
 
     const loadSkills = async () => {
+      setIsLoading(true);
+      setError(null);
       try {
-        const response = await fetch('data/skill-groups.json');
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-        const payload = (await response.json()) as SkillGroup[];
-        if (isMounted) {
+        const payload = await fetchLocalizedJson<SkillGroup[]>('skill-groups.json', locale);
+        if (!cancelled) {
           setSkillGroups(payload);
         }
-      } catch (error) {
+      } catch (err) {
+        if (!cancelled) {
+          setError(heroCopy.error);
+        }
         if (process.env.NODE_ENV !== 'production') {
-          console.error('Failed to load skill groups', error);
+          console.error('Failed to load skill groups', err);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
         }
       }
     };
@@ -33,9 +47,9 @@ export function Hero() {
     loadSkills();
 
     return () => {
-      isMounted = false;
+      cancelled = true;
     };
-  }, []);
+  }, [heroCopy, locale]);
 
   const skillAnimation = useMemo(
     () => ({
@@ -152,14 +166,55 @@ export function Hero() {
   const springY = useSpring(mouseY, { stiffness: 120, damping: 20, mass: 0.6 });
 
   useEffect(() => {
+    let frame = 0;
+    let pointerAttached = false;
+
     const handleMove = (event: PointerEvent) => {
-      const { innerWidth, innerHeight } = window;
-      mouseX.set(event.clientX / innerWidth);
-      mouseY.set(event.clientY / innerHeight);
+      if (frame !== 0) {
+        cancelAnimationFrame(frame);
+      }
+
+      frame = requestAnimationFrame(() => {
+        const { innerWidth, innerHeight } = window;
+        mouseX.set(event.clientX / innerWidth);
+        mouseY.set(event.clientY / innerHeight);
+        frame = 0;
+      });
     };
 
-    window.addEventListener('pointermove', handleMove);
-    return () => window.removeEventListener('pointermove', handleMove);
+    const attachPointer = () => {
+      if (pointerAttached) {
+        return;
+      }
+      window.addEventListener('pointermove', handleMove, { passive: true });
+      pointerAttached = true;
+    };
+
+    let loadHandler: (() => void) | null = null;
+
+    if (document.readyState === 'complete') {
+      attachPointer();
+    } else {
+      loadHandler = () => {
+        attachPointer();
+        if (loadHandler) {
+          window.removeEventListener('load', loadHandler);
+        }
+      };
+      window.addEventListener('load', loadHandler);
+    }
+
+    return () => {
+      if (frame !== 0) {
+        cancelAnimationFrame(frame);
+      }
+      if (pointerAttached) {
+        window.removeEventListener('pointermove', handleMove);
+      }
+      if (loadHandler) {
+        window.removeEventListener('load', loadHandler);
+      }
+    };
   }, [mouseX, mouseY]);
 
   const gradientX = useTransform(springX, (latest) => `${latest * 100}%`);
@@ -169,6 +224,10 @@ export function Hero() {
   const textParallaxY = useTransform(springY, [0, 1], [-6, 6]);
   const subtextParallaxX = useTransform(springX, [0, 1], [-8, 8]);
   const subtextParallaxY = useTransform(springY, [0, 1], [-4, 4]);
+
+  if (isLoading || error) {
+    return <HeroSkeleton message={error ?? undefined} />;
+  }
 
   return (
     <section data-full-width className="relative flex min-h-[100vh] w-full flex-col justify-center overflow-hidden pb-24 pt-32">
@@ -208,33 +267,33 @@ export function Hero() {
           variants={fadeInUp}
           style={{ translateX: textParallaxX, translateY: textParallaxY }}
         >
-          Eric Leung
+          {heroCopy.name}
         </motion.h1>
         <motion.p
           className="gradient-text text-3xl font-semibold sm:text-4xl lg:text-5xl"
           variants={fadeInUp}
           style={{ translateX: subtextParallaxX, translateY: subtextParallaxY }}
         >
-          Commerce journeys and payment platforms that actually convert.
+          {heroCopy.headline}
         </motion.p>
         <motion.p
           className="mx-auto max-w-3xl text-lg text-foreground/80 sm:text-xl"
           variants={fadeInUp}
         >
-          5+ years building scalable web systems across travel, SaaS, and payment platforms. I translate product intent into launch-ready experiences, pairing React and Spring Boot with documentation, mentoring, and the rituals that keep teams shipping.
+          {heroCopy.summary}
         </motion.p>
         <motion.div className="flex flex-wrap items-center justify-center gap-4" variants={fadeInUp}>
           <Link
             href="#projects"
             className="rounded-full border border-foreground/15 bg-transparent px-6 py-3 text-sm font-semibold text-foreground/70 transition hover:border-foreground/50 hover:text-foreground"
           >
-            Browse my work
+            {heroCopy.ctaProjects}
           </Link>
           <Link
             href="#contact"
             className="rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background shadow-[0_25px_45px_-25px_rgba(255,255,255,0.55)] transition hover:scale-[1.03]"
           >
-            Let&apos;s collaborate
+            {heroCopy.ctaContact}
           </Link>
         </motion.div>
       </motion.div>
@@ -246,10 +305,28 @@ export function Hero() {
       >
         <div className="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-foreground/40">
           <span className="h-[1px] w-12 bg-foreground/20" />
-          Scroll to explore
+          {heroCopy.scrollPrompt}
           <span className="h-[1px] w-12 bg-foreground/20" />
         </div>
       </motion.div>
+    </section>
+  );
+}
+
+function HeroSkeleton({ message }: { message?: string } = {}) {
+  return (
+    <section data-full-width className="relative flex min-h-[100vh] w-full flex-col justify-center overflow-hidden pb-24 pt-32">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(76,139,245,0.12),_transparent_65%)]" />
+      <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 text-center sm:px-8">
+        <span className="mx-auto h-8 w-48 animate-pulse rounded-full bg-white/10" />
+        <span className="mx-auto h-10 w-80 animate-pulse rounded-full bg-white/10 sm:h-12 sm:w-[28rem]" />
+        <span className="mx-auto h-16 w-full max-w-2xl animate-pulse rounded-3xl bg-white/5" />
+        <div className="mx-auto flex gap-4">
+          <span className="h-11 w-32 animate-pulse rounded-full bg-white/10" />
+          <span className="h-11 w-32 animate-pulse rounded-full bg-white/10" />
+        </div>
+        {message ? <p className="mx-auto max-w-md text-xs text-foreground/50">{message}</p> : null}
+      </div>
     </section>
   );
 }

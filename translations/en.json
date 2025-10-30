@@ -1,0 +1,66 @@
+{
+  "contact": {
+    "eyebrow": "Let’s collaborate",
+    "title": "Let’s build something worth refactoring.",
+    "description": "Share the spark, the problem, or the experiment. I’ll reply with architecture ideas, motion prototypes, or the refactor plan your product deserves.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Who am I vibing with?",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Where should I reply?",
+    "messageLabel": "Project Details",
+    "messagePlaceholder": "What are we refactoring, reinventing, or exploring?",
+    "submitLabel": "Send Eric a message",
+    "submittedLabel": "Message sent — talk soon!",
+    "statusMessage": "I typically reply within two business days. You can also drop me a note at hello@ericleung.dev."
+  },
+  "hero": {
+    "name": "Eric Leung",
+    "headline": "Commerce journeys and payment platforms that actually convert.",
+    "summary": "5+ years building scalable web systems across travel, SaaS, and payment platforms. I translate product intent into launch-ready experiences, pairing React and Spring Boot with documentation, mentoring, and the rituals that keep teams shipping.",
+    "ctaProjects": "Browse my work",
+    "ctaContact": "Let’s collaborate",
+    "scrollPrompt": "Scroll to explore",
+    "error": "Unable to load skill showcase. Refresh to try again."
+  },
+  "projectsShowcase": {
+    "title": "Projects in Motion",
+    "description": "Recent launches across commerce, platform engineering, and product operations where I paired code with delivery leadership.",
+    "empty": "No case studies in this category yet—reach out to hear about related work.",
+    "error": "Projects are sleeping right now. Refresh the page to try again."
+  },
+  "impactHighlights": {
+    "eyebrow": "Impact Snapshots",
+    "title": "Metrics that tell the delivery story.",
+    "description": "Highlights from commerce launches and product leadership—pulled from partner retros, revenue reports, and team feedback loops.",
+    "error": "Unable to load impact metrics right now. Please refresh or revisit soon."
+  },
+  "timeline": {
+    "title": "About & Latest Chapters",
+    "description": "Recent roles where architecture stewardship, refactoring, and team velocity came together.",
+    "tagline": "Craft over chaos",
+    "error": "Unable to load the experience timeline. Try refreshing the page.",
+    "showMore": "Show earlier roles",
+    "collapse": "Collapse roles"
+  },
+  "testimonials": {
+    "eyebrow": "Trusted Collaborators",
+    "title": "Stories from leaders who ship with me.",
+    "description": "Alignment, clarity, and healthier systems—heard straight from the teams who invited me into the messy middle.",
+    "empty": "Testimonials coming soon.",
+    "error": "Couldn’t fetch testimonials right now. Try refreshing."
+  },
+  "footer": {
+    "label": "Eric Leung",
+    "tagline": "Building reliable commerce platforms through calm engineering leadership.",
+    "craftedWith": "Crafted with Next.js & Tailwind · © {year} Eric Leung",
+    "links": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "email": "Email"
+    }
+  },
+  "about": {
+    "title": "Architecting joyful systems.",
+    "description": "Eric Leung is a software engineer who believes that sustainable systems are born from playful experimentation and rigorous care. From taming sprawling monoliths to prototyping immersive interfaces, he treats refactoring as an ongoing art form."
+  }
+}
