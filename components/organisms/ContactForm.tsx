@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { motion } from 'framer-motion';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { SectionHeader } from '@/components/molecules';
 import { fadeInUp, staggerChildren } from '@/lib/animations';
+import { fetchLocalizedJson } from '@/lib/data';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import type { ContactCopy } from '@/lib/types';
 
@@ -13,14 +15,62 @@ type ContactFormProps = {
   message?: string;
 };
 
-export function ContactForm({ locale = 'en', isLoading = false, message }: ContactFormProps = {}) {
-  const copy = getTranslations(locale).contact as ContactCopy;
+const WEB3FORMS_ENDPOINT = process.env.NEXT_PUBLIC_WEB3FORMS_ENDPOINT ?? 'https://api.web3forms.com/submit';
+const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? '';
+const WEB3FORMS_HCAPTCHA_SITEKEY = (process.env.NEXT_PUBLIC_WEB3FORMS_HCAPTCHA_SITEKEY ?? '50b2fe65-b00b-4b9e-ad62-3ba471098be2').trim();
+const WEB3FORMS_HCAPTCHA_ENABLED =
+  (process.env.NEXT_PUBLIC_WEB3FORMS_ENABLE_HCAPTCHA ?? 'false').trim().toLowerCase() === 'true';
+const WEB3FORMS_HCAPTCHA_ACTIVE = WEB3FORMS_HCAPTCHA_ENABLED && WEB3FORMS_HCAPTCHA_SITEKEY.length > 0;
 
-  if (isLoading) {
-    return <ContactFormSkeleton message={message} />;
+export function ContactForm({ locale = 'en', isLoading: isLoadingOverride = false, message }: ContactFormProps = {}) {
+  const [copy, setCopy] = useState<ContactCopy | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadContactCopy = async () => {
+      setIsLoading(true);
+      setCopy(null);
+      setError(null);
+
+      const contactTranslations = getTranslations(locale).contact as ContactCopy;
+
+      try {
+        const payload = await fetchLocalizedJson<ContactCopy>('contact.json', locale);
+        if (!cancelled) {
+          setCopy(payload);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(contactTranslations?.error ?? 'Unable to load the contact form copy. Please refresh and try again.');
+        }
+
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('Failed to load contact copy', err);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    loadContactCopy();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [locale]);
+
+  const feedbackMessage = message ?? error ?? undefined;
+
+  if (isLoadingOverride || isLoading || !copy) {
+    return <ContactFormSkeleton message={feedbackMessage} />;
   }
 
-  return <ContactFormShell copy={copy} message={message} />;
+  return <ContactFormShell copy={copy} message={feedbackMessage} />;
 }
 
 type ContactFormShellProps = {
@@ -28,13 +78,119 @@ type ContactFormShellProps = {
   message?: string;
 };
 
-function ContactFormShell({ copy, message }: ContactFormShellProps) {
-  const [status, setStatus] = useState<'idle' | 'submitted'>('idle');
+type ContactFormSkeletonProps = {
+  message?: string;
+};
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+function ContactFormShell({ copy, message }: ContactFormShellProps) {
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [statusText, setStatusText] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const captchaRef = useRef<InstanceType<typeof HCaptcha> | null>(null);
+
+  useEffect(() => {
+    if (status === 'success' || status === 'error') {
+      const timeout = window.setTimeout(() => {
+        setStatus('idle');
+        setStatusText(null);
+      }, 6000);
+
+      return () => window.clearTimeout(timeout);
+    }
+  }, [status]);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setStatus('submitted');
-    setTimeout(() => setStatus('idle'), 4000);
+    setStatus('submitting');
+    setStatusText(null);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const accessKey = WEB3FORMS_ACCESS_KEY?.trim();
+
+    if (!accessKey) {
+      setStatus('error');
+      setStatusText(copy.errorMessage ?? 'Contact form is not configured. Please reach out via email.');
+      return;
+    }
+
+    formData.set('access_key', accessKey);
+
+    if (copy.subject) {
+      const subject = copy.subject.trim();
+      if (subject) {
+        formData.set('subject', subject);
+      }
+    }
+
+    if (WEB3FORMS_HCAPTCHA_ACTIVE) {
+      const token = captchaToken?.trim() ?? '';
+      if (!token) {
+        setStatus('error');
+        setStatusText(
+          copy.captchaErrorMessage ??
+            copy.errorMessage ??
+            'Please verify that you are human by completing the captcha.'
+        );
+        return;
+      }
+      formData.set('h-captcha-response', token);
+    } else {
+      formData.delete('h-captcha-response');
+    }
+
+    try {
+      const payload = Object.fromEntries(formData.entries()) as Record<string, string>;
+
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = (await response.json()) as { success?: boolean; message?: string };
+
+      if (response.ok && result?.success) {
+        form.reset();
+        if (WEB3FORMS_HCAPTCHA_ACTIVE) {
+          captchaRef.current?.resetCaptcha();
+          setCaptchaToken(null);
+        }
+        setStatus('success');
+        const successCopy = copy.successMessage
+          ? `${copy.successMessage}${copy.statusMessage ? ` ${copy.statusMessage}` : ''}`
+          : copy.statusMessage ?? result.message ?? null;
+        setStatusText(successCopy);
+      } else {
+        setStatus('error');
+        const fallbackError = copy.errorMessage ?? 'We could not send your message. Please try again soon.';
+        const composedError = result?.message ? `${fallbackError} - ${result.message}` : fallbackError;
+        setStatusText(composedError);
+
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('Web3Forms submission failed', result);
+        }
+        if (WEB3FORMS_HCAPTCHA_ACTIVE) {
+          captchaRef.current?.resetCaptcha();
+          setCaptchaToken(null);
+        }
+      }
+    } catch (err) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Failed to submit contact form', err);
+      }
+      setStatus('error');
+      const fallbackError = copy.errorMessage ?? 'We could not send your message. Please try again soon.';
+      setStatusText(fallbackError);
+      if (WEB3FORMS_HCAPTCHA_ACTIVE) {
+        captchaRef.current?.resetCaptcha();
+        setCaptchaToken(null);
+      }
+    }
   };
 
   return (
@@ -100,22 +256,51 @@ function ContactFormShell({ copy, message }: ContactFormShellProps) {
                 className="mt-2 rounded-2xl border border-white/10 bg-background/80 px-4 py-3 text-sm text-foreground outline-none transition focus:border-foreground/40 focus:shadow-[0_0_0_2px_rgba(255,255,255,0.08)] focus:ring-4 focus:ring-foreground/10"
               />
             </motion.label>
+            {WEB3FORMS_HCAPTCHA_ACTIVE ? (
+              <motion.div variants={fadeInUp}>
+                <HCaptcha
+                  sitekey={WEB3FORMS_HCAPTCHA_SITEKEY}
+                  theme="dark"
+                  onVerify={(token) => {
+                    setCaptchaToken(token);
+                  }}
+                  onExpire={() => {
+                    setCaptchaToken(null);
+                    captchaRef.current?.resetCaptcha();
+                  }}
+                  onError={() => {
+                    setCaptchaToken(null);
+                    captchaRef.current?.resetCaptcha();
+                  }}
+                  onClose={() => {
+                    setCaptchaToken(null);
+                  }}
+                  ref={captchaRef}
+                />
+              </motion.div>
+            ) : null}
             <motion.button
               type="submit"
               variants={fadeInUp}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex h-12 items-center justify-center rounded-full bg-gradient-to-r from-foreground via-foreground/90 to-foreground/80 px-7 text-sm font-semibold text-background shadow-[0_25px_45px_-25px_rgba(0,0,0,0.65)] transition hover:brightness-110"
+              disabled={status === 'submitting'}
+              className="inline-flex h-12 items-center justify-center rounded-full bg-gradient-to-r from-foreground via-foreground/90 to-foreground/80 px-7 text-sm font-semibold text-background shadow-[0_25px_45px_-25px_rgba(0,0,0,0.65)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-75"
             >
-              {status === 'submitted' ? copy.submittedLabel : copy.submitLabel}
+              {status === 'submitting'
+                ? copy.submittingLabel ?? 'Sending...'
+                : status === 'success'
+                  ? copy.submittedLabel
+                  : copy.submitLabel}
             </motion.button>
             <motion.div
               role="status"
               aria-live="polite"
               variants={fadeInUp}
-              className={`min-h-[1.5rem] text-sm text-foreground/70 transition-opacity ${status === 'submitted' ? 'opacity-100' : 'opacity-0'}`}
+              className={`min-h-[1.5rem] text-sm transition-opacity ${status === 'success' || status === 'error' ? 'opacity-100' : 'opacity-0'} ${status === 'error' ? 'text-red-200' : 'text-foreground/70'}`}
             >
-              {status === 'submitted' ? copy.statusMessage : null}
+              {status === 'success' ? statusText ?? copy.statusMessage : null}
+              {status === 'error' ? statusText ?? copy.errorMessage ?? 'We could not send your message. Please try again soon.' : null}
             </motion.div>
           </motion.form>
         </div>
@@ -124,7 +309,7 @@ function ContactFormShell({ copy, message }: ContactFormShellProps) {
   );
 }
 
-function ContactFormSkeleton({ message }: { message?: string }) {
+export function ContactFormSkeleton({ message }: ContactFormSkeletonProps) {
   return (
     <section id="contact" className="relative max-w-4xl">
       <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/5 p-10 shadow-[0_35px_70px_-45px_rgba(0,0,0,0.75)] backdrop-blur-2xl">

@@ -1,4 +1,4 @@
-export { ContactForm } from './ContactForm';
+export { ContactForm, ContactFormSkeleton } from './ContactForm';
 export { Hero } from './Hero';
 export { ImpactHighlights } from './ImpactHighlights';
 export { ProjectsShowcase } from './ProjectsShowcase';

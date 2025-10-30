@@ -10,8 +10,14 @@
     "messageLabel": "Project Details",
     "messagePlaceholder": "What are we refactoring, reinventing, or exploring?",
     "submitLabel": "Send Eric a message",
+    "submittingLabel": "Sending your message…",
     "submittedLabel": "Message sent — talk soon!",
-    "statusMessage": "I typically reply within two business days. You can also drop me a note at hello@ericleung.dev."
+    "successMessage": "Thanks for reaching out! Your note just landed in my inbox.",
+    "statusMessage": "I typically reply within two business days. You can also drop me a note at hello@ericleung.dev.",
+    "errorMessage": "Something went wrong sending your message. Please try again or email hello@ericleung.dev.",
+    "captchaErrorMessage": "Please verify you’re human by completing the captcha.",
+    "error": "Couldn’t load the contact form. Please refresh and try again.",
+    "subject": "New portfolio inquiry"
   },
   "hero": {
     "name": "Eric Leung",
@@ -58,9 +64,5 @@
       "linkedin": "LinkedIn",
       "email": "Email"
     }
-  },
-  "about": {
-    "title": "Architecting joyful systems.",
-    "description": "Eric Leung is a software engineer who believes that sustainable systems are born from playful experimentation and rigorous care. From taming sprawling monoliths to prototyping immersive interfaces, he treats refactoring as an ongoing art form."
   }
 }

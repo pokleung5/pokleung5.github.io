@@ -58,8 +58,14 @@ export type ContactCopy = {
   messageLabel: string;
   messagePlaceholder: string;
   submitLabel: string;
+  submittingLabel?: string;
   submittedLabel: string;
+  successMessage?: string;
   statusMessage: string;
+  errorMessage?: string;
+  captchaErrorMessage?: string;
+  error?: string;
+  subject?: string;
 };
 
 export type PortfolioData = {
