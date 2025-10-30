@@ -9,7 +9,7 @@
 
 ## Build, Test, and Development Commands
 - `npm run dev` — Launches the Next.js dev server with hot reload.
-- `npm run build` — Produces the production bundle and runs `next export` to emit the static site into `out/`.
+- `npm run build` — Produces the static export (via `output: 'export'`) into `out/`.
 - `npm run start` — Serves the production build locally (useful for smoke tests).
 - `npm run lint` — Executes ESLint with the Next.js config.
 - `npm run deploy` — Publishes the generated `out/` directory via `gh-pages`.
