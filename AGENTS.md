@@ -17,7 +17,7 @@
 ## CI/CD
 - GitHub Actions workflow `deploy.yml` builds on pushes to `main`, linting and exporting the static site.
 - The workflow uploads `out/` to GitHub Pages via `actions/deploy-pages` (no `configure-pages` step).
-- Supply a fine-scoped PAT named `GH_PAGES_DEPLOY_TOKEN` (repo or public_repo scope) so the workflow can push to the pages repo.
+- Define repo-level `Secrets/Variables` for `NEXT_PUBLIC_WEB3FORMS_*`; the workflow injects them as environment variables during the build.
 
 ## Coding Style & Naming Conventions
 - Use TypeScript with React Server Components unless a client boundary is required (`'use client'` annotations).
