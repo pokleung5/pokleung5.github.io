@@ -3,7 +3,7 @@
     "title": "Software Engineer",
     "company": "Plusgrade",
     "period": "October 2022 — Present",
-    "description": "Lead full-stack delivery for cruise and travel commerce upsell flows, bridging product goals with scalable engineering execution.",
+    "description": "Full-stack delivery for cruise and travel commerce upsell flows, bridging product goals with scalable engineering execution.",
     "focus": "Commerce Upsell & Micro-Frontend Platform",
     "highlights": [
       "Shipped dynamic add-on and upgrade journeys adopted by multiple global cruise lines.",
@@ -11,7 +11,7 @@
       "Integrated and maintained global payment gateways, securing localized checkouts for international markets.",
       "Co-created an internal payment platform that reduced reliance on third-party processors."
     ],
-    "tools": ["React", "TypeScript", "Spring Boot", "Micro-frontend"]
+    "tools": ["Partner Communication", "React", "TypeScript", "Spring Boot", "Micro-frontend", "GraphQL", "Payment", "Bidding System", "Docker", "AWS Cloud"]
   },
   {
     "title": "Product Manager",
@@ -24,7 +24,7 @@
       "Mentored new graduates on agile planning, documentation, and release readiness.",
       "Facilitated handoffs between design and backend teams to keep feature delivery on track."
     ],
-    "tools": ["Product Discovery", "Agile Facilitation", "Notion", "Linear"]
+    "tools": ["Product Discovery", "Agile Facilitation", "Notion", "Figma"]
   },
   {
     "title": "Graduate Engineer",
@@ -36,9 +36,9 @@
       "Developed responsive interfaces in Vanilla JS and React for both web and embedded contexts.",
       "Authored SDKs and REST APIs used by client integrators and third-party partners.",
       "Diagnosed memory leaks and race conditions to improve wake-up reliability across devices.",
-      "Supported integration of Amino OS with Android Open Source Project (AOSP) and RDK."
+      "Supported integration of Amino OS with Android Open Source Project (AOSP) and Reference Development Kit (RDK)."
     ],
-    "tools": ["React", "JavaScript", "REST APIs", "Embedded Systems"]
+    "tools": ["Android", "Linux Kernel", "Bash", "WebKit", "REST APIs", "JSONRPC", "Embedded Systems", "Performance Analysis", "Chrome DevTools"]
   },
   {
     "title": "Assistant Software Engineer",

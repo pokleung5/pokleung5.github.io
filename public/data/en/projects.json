@@ -1,34 +1,95 @@
 [
   {
-    "name": "Cruise Upsell Experience",
+    "name": "Collaborative Portfolio Studio",
+    "category": "Creative Tech",
+    "tagline": "AI-assisted portfolio customization across leading copilots.",
+    "description": "Designed a portfolio build system that choreographs Claude Code, Codex, AMP, and Gemini to generate tailored sections, motion concepts, and copy variations driven by prospect personas.",
+    "technologies": [
+      "Next.js",
+      "AI Orchestration",
+      "Skeleton",
+      "i18n localization"
+    ],
+    "highlight": "Cut portfolio refresh cycles from days to hours by unifying multiple AI copilots into a single creative workflow."
+  },
+  {
+    "name": "Multi-Provider Checkout",
     "category": "Commerce",
-    "tagline": "Responsive add-on journeys for international cruise partners.",
-    "description": "Re-architected ancillary sales flows at Plusgrade so merchandising teams can launch targeted offers without code changes.",
-    "technologies": ["React", "TypeScript", "Micro-frontend", "GraphQL"],
-    "highlight": "Helped launch upsell programs across multiple cruise brands, unlocking new ancillary revenue streams."
+    "tagline": "Rebuilt payment form architecture to flex across providers.",
+    "description": "Refactored the checkout experience into a provider-agnostic orchestration layer with swappable UI modules and validation flows for Stripe, Braintree, and regional PSPs.",
+    "technologies": [
+      "TypeScript",
+      "Design Systems",
+      "Payment APIs",
+      "Event Streaming"
+    ],
+    "highlight": "Unlocked rapid onboarding of new payment partners while lifting conversion through localized form variants."
   },
   {
-    "name": "Global Payments Hub",
-    "category": "Platform",
-    "tagline": "Unified gateway integrations with centralized payment logic.",
-    "description": "Integrated and maintained multi-gateway payment support to deliver localized, PCI-compliant checkouts.",
-    "technologies": ["Spring Boot", "Java", "Payment APIs", "PostgreSQL"],
-    "highlight": "Reduced third-party processor reliance by bringing core payment orchestration in-house."
-  },
-  {
-    "name": "Dec Future Delivery Cadence",
-    "category": "Product Delivery",
-    "tagline": "Lightweight product operations for a remote SaaS team.",
-    "description": "Established agile rituals, requirement templates, and documentation standards to align design, backend, and product stakeholders.",
-    "technologies": ["Notion", "Linear", "Figma", "Product Analytics"],
-    "highlight": "Shortened discovery-to-delivery cycles by clarifying scope and ownership for each release."
+    "name": "Signals Pulseboard",
+    "category": "Data Automation",
+    "tagline": "Automated market briefings powered by n8n and AI summarization.",
+    "description": "Built an n8n pipeline that aggregates news across finance feeds, enriches items with sentiment analysis, prompts a custom LLM agent for trading insights, and delivers summaries to a Telegram bot for the team.",
+    "technologies": [
+      "n8n",
+      "LLM Ops",
+      "OpenAI Assistants",
+      "Supabase",
+      "Telegram Bot API"
+    ],
+    "highlight": "Delivered daily multi-source insights with explainable AI notes, pushed via Telegram alerts, saving analysts two hours of manual research per session."
   },
   {
     "name": "Amino Device SDK Toolkit",
     "category": "Platform",
     "tagline": "Developer tools for set-top box partners and vendors.",
-    "description": "Authored JavaScript SDKs and REST endpoints that chipset vendors and partners use to integrate with Amino OS.",
-    "technologies": ["JavaScript", "React", "REST APIs", "Embedded Tooling"],
-    "highlight": "Improved integration reliability while extending Amino OS to both AOSP and RDK ecosystems."
+    "description": "Delivered a bundle of JavaScript SDKs, UI scaffolds, and integration recipes that abstract hardware quirks and playback pipelines so operator partners can ship Amino OS apps faster.",
+    "technologies": [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "WebKit",
+      "Embedded Tooling"
+    ],
+    "highlight": "Reduced partner integration time from weeks to days by automating device capability checks and providing drop-in UX components. Achieved a 78% reduction in Amino OS memory footprint by trimming legacy playback modules."
+  },
+  {
+    "name": "SDK Companion for VS Code",
+    "category": "Developer Tools",
+    "tagline": "IntelliSense-like guidance sourced from a minified partner SDK.",
+    "description": "Engineered a VS Code extension that ingests a minified JavaScript SDK, reconstructs usable metadata, and surfaces inline suggestions, signature help, and usage snippets for partner developers.",
+    "technologies": [
+      "VS Code Extensions",
+      "TypeScript",
+      "Language Server Protocol",
+      "AST Tooling"
+    ],
+    "highlight": "Cut onboarding time for integrators by packaging hidden SDK behaviors into contextual editor assistance."
+  },
+  {
+    "name": "Hospital Asset Management System",
+    "category": "Operations",
+    "tagline": "Asset lifecycle management tailored for clinical facilities.",
+    "description": "Delivered a web platform that tracks medical equipment inventory, schedules preventative maintenance, and automates replacement tasks with vendor coordination workflows.",
+    "technologies": [
+      "React",
+      "FastApi",
+      "PostgreSQL",
+      "Workflow Automation"
+    ],
+    "highlight": "Improved audit readiness and reduced emergency downtime by orchestrating maintenance and replacement schedules from a single command center."
+  },
+  {
+    "name": "Dec Future Delivery Cadence",
+    "category": "Product Delivery",
+    "tagline": "Lightweight product operations for a remote SaaS team.",
+    "description": "Implemented an adaptive delivery playbook\u2014blending roadmap shaping, weekly prioritization, and async rituals\u2014to knit product, design, and platform stakeholders into a predictable shipping rhythm.",
+    "technologies": [
+      "Notion",
+      "Linear",
+      "Figma",
+      "Product Analytics"
+    ],
+    "highlight": "Cut discovery-to-release cycles by 35% while increasing cross-team satisfaction scores through clearer ownership and rollout comms."
   }
 ]

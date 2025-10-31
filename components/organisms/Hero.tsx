@@ -7,35 +7,45 @@ import { AnimatedBackground } from '@/components/molecules';
 import { fadeInUp, staggerChildren } from '@/lib/animations';
 import { fetchLocalizedJson } from '@/lib/data';
 import { getTranslations, type Locale } from '@/lib/i18n';
-import type { SkillGroup } from '@/lib/types';
+import type { Project } from '@/lib/types';
 
 type HeroProps = {
   locale?: Locale;
 };
 
+type HeroCopy = {
+  name: string;
+  headline: string;
+  summary: string;
+  ctaProjects: string;
+  ctaContact: string;
+  scrollPrompt: string;
+  error: string;
+};
+
 export function Hero({ locale = 'en' }: HeroProps = {}) {
-  const heroCopy = useMemo(() => getTranslations(locale).hero, [locale]);
-  const [skillGroups, setSkillGroups] = useState<SkillGroup[]>([]);
+  const heroCopy = useMemo(() => getTranslations(locale).hero as HeroCopy, [locale]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
-    const loadSkills = async () => {
+    const loadProjects = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const payload = await fetchLocalizedJson<SkillGroup[]>('skill-groups.json', locale);
+        const payload = await fetchLocalizedJson<Project[]>('projects.json', locale);
         if (!cancelled) {
-          setSkillGroups(payload);
+          setProjects(payload);
         }
       } catch (err) {
         if (!cancelled) {
           setError(heroCopy.error);
         }
         if (process.env.NODE_ENV !== 'production') {
-          console.error('Failed to load skill groups', err);
+          console.error('Failed to load projects', err);
         }
       } finally {
         if (!cancelled) {
@@ -44,7 +54,7 @@ export function Hero({ locale = 'en' }: HeroProps = {}) {
       }
     };
 
-    loadSkills();
+    loadProjects();
 
     return () => {
       cancelled = true;
@@ -66,22 +76,21 @@ export function Hero({ locale = 'en' }: HeroProps = {}) {
     [skillAnimation]
   );
   const heroSkills = useMemo(() => {
-    const emphasised: string[] = [];
-    const others: string[] = [];
+    const seen = new Set<string>();
+    const technologies: string[] = [];
 
-    for (const group of skillGroups) {
-      for (const item of group.items) {
-        const target = item.emphasis ? emphasised : others;
-        if (!target.includes(item.name)) {
-          target.push(item.name);
+    for (const project of projects) {
+      for (const technology of project.technologies ?? []) {
+        const value = technology.trim();
+        if (value && !seen.has(value)) {
+          seen.add(value);
+          technologies.push(value);
         }
       }
     }
 
-    return [...emphasised, ...others]
-      .filter((skill, index, self) => self.indexOf(skill) === index)
-      .slice(0, 8);
-  }, [skillGroups]);
+    return technologies.slice(0, 8);
+  }, [projects]);
   const randomPosition = useCallback(() => {
     const style: Record<string, string> = {};
     if (Math.random() > 0.5) {

@@ -66,7 +66,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
                   </li>
                 ))}
               </ul>
-              <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.25em] text-foreground/50">
+              <div className="flex flex-wrap gap-2 mt-4 text-xs uppercase tracking-[0.25em] text-foreground/50">
                 {experience.tools.map((tool) => (
                   <span key={tool} className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
                     {tool}

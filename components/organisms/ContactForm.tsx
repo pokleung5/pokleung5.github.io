@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { SectionHeader } from '@/components/molecules';
 import { fadeInUp, staggerChildren } from '@/lib/animations';
-import { fetchLocalizedJson } from '@/lib/data';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import type { ContactCopy } from '@/lib/types';
 
@@ -32,28 +31,13 @@ export function ContactForm({ locale = 'en', isLoading: isLoadingOverride = fals
 
     const loadContactCopy = async () => {
       setIsLoading(true);
-      setCopy(null);
       setError(null);
 
       const contactTranslations = getTranslations(locale).contact as ContactCopy;
 
-      try {
-        const payload = await fetchLocalizedJson<ContactCopy>('contact.json', locale);
-        if (!cancelled) {
-          setCopy(payload);
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setError(contactTranslations?.error ?? 'Unable to load the contact form copy. Please refresh and try again.');
-        }
-
-        if (process.env.NODE_ENV !== 'production') {
-          console.error('Failed to load contact copy', err);
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
+      if (!cancelled) {
+        setCopy(contactTranslations);
+        setIsLoading(false);
       }
     };
 

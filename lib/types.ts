@@ -21,20 +21,6 @@ export type Project = {
 
 export type ProjectFilter = 'All' | ProjectCategory;
 
-export type Skill = {
-  name: string;
-  emphasis?: boolean;
-  description?: string;
-};
-
-export type SkillGroup = {
-  label: string;
-  tagline: string;
-  summary: string;
-  strengths: string[];
-  items: Skill[];
-};
-
 export type ImpactHighlight = {
   metric: string;
   label: string;
@@ -71,7 +57,6 @@ export type ContactCopy = {
 export type PortfolioData = {
   experiences: Experience[];
   projects: Project[];
-  skillGroups: SkillGroup[];
   impactHighlights: ImpactHighlight[];
   testimonials: Testimonial[];
   contact?: ContactCopy;

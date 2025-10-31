@@ -13,9 +13,9 @@ type SectionTitleProps<T extends ElementType> = {
 } & Omit<ComponentPropsWithoutRef<T>, 'as' | 'children' | 'className'>;
 
 const sizeStyles: Record<SectionTitleSize, string> = {
-  md: 'text-3xl font-bold sm:text-4xl',
-  lg: 'text-4xl font-bold sm:text-5xl',
-  xl: 'text-5xl font-bold sm:text-[3.75rem]'
+  md: 'text-3xl font-bold leading-relaxed sm:text-4xl sm:leading-relaxed',
+  lg: 'text-4xl font-bold leading-relaxed sm:text-5xl sm:leading-relaxed',
+  xl: 'text-5xl font-bold leading-relaxed sm:text-[3.75rem] sm:leading-relaxed'
 };
 
 const variantStyles: Record<SectionTitleVariant, string> = {
