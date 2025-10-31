@@ -16,7 +16,7 @@
 
 ## CI/CD
 - GitHub Actions workflow `deploy.yml` builds on pushes to `main`, linting and exporting the static site.
-- The workflow deploys `out/` to the `main` branch of `pokleung5/pokleung5.github.io` via `peaceiris/actions-gh-pages`.
+- The workflow uploads `out/` to GitHub Pages via `actions/deploy-pages` (no `configure-pages` step).
 - Supply a fine-scoped PAT named `GH_PAGES_DEPLOY_TOKEN` (repo or public_repo scope) so the workflow can push to the pages repo.
 
 ## Coding Style & Naming Conventions
