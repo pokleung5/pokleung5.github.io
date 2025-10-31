@@ -270,7 +270,7 @@ export function Hero({ locale = 'en' }: HeroProps = {}) {
           {heroCopy.name}
         </motion.h1>
         <motion.p
-          className="gradient-text text-3xl font-semibold sm:text-4xl lg:text-5xl"
+          className="gradient-text text-3xl font-semibold leading-[1.25] sm:text-4xl lg:text-5xl lg:leading-[1.2]"
           variants={fadeInUp}
           style={{ translateX: subtextParallaxX, translateY: subtextParallaxY }}
         >

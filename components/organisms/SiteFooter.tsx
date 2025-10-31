@@ -11,7 +11,7 @@ export function SiteFooter({ locale = 'en' }: SiteFooterProps = {}) {
   const socialLinks = [
     { label: footerCopy.links.github, href: 'https://github.com/pokleung5', Icon: Github },
     { label: footerCopy.links.linkedin, href: 'https://www.linkedin.com/in/pokleung5/', Icon: Linkedin },
-    { label: footerCopy.links.email, href: 'mailto:hello@ericleung.dev', Icon: Mail }
+    { label: footerCopy.links.email, href: 'mailto:ericleung.pok@gmail.com', Icon: Mail }
   ];
   const currentYear = new Date().getFullYear();
   const craftedWith = footerCopy.craftedWith.replace('{year}', String(currentYear));

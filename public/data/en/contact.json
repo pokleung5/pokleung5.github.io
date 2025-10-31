@@ -12,8 +12,8 @@
   "submittingLabel": "Sending your message…",
   "submittedLabel": "Message sent — talk soon!",
   "successMessage": "Thanks for reaching out! Your note just landed in my inbox.",
-  "statusMessage": "I typically reply within two business days. You can also drop me a note at hello@ericleung.dev.",
-  "errorMessage": "Something went wrong sending your message. Please try again or email hello@ericleung.dev.",
+  "statusMessage": "I typically reply within two business days. You can also drop me a note at ericleung.pok@gmail.com.",
+  "errorMessage": "Something went wrong sending your message. Please try again or email ericleung.pok@gmail.com.",
   "captchaErrorMessage": "Please verify you’re human by completing the captcha.",
   "subject": "New portfolio inquiry"
 }

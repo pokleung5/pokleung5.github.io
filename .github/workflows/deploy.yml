@@ -27,6 +27,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Verify required env
+        run: |
+          REQUIRED_VARS=(NEXT_PUBLIC_WEB3FORMS_ENDPOINT NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY)
+          OPTIONAL_VARS=(NEXT_PUBLIC_WEB3FORMS_HCAPTCHA_SITEKEY)
+
+          for var in "${REQUIRED_VARS[@]}"; do
+            if [ -z "${!var:-}" ]; then
+              echo "::error title=Missing environment variable::${var} must be provided via repository secrets or variables."
+              exit 1
+            fi
+          done
+
+          if [ "${NEXT_PUBLIC_WEB3FORMS_ENABLE_HCAPTCHA,,}" = "true" ] && [ -z "${NEXT_PUBLIC_WEB3FORMS_HCAPTCHA_SITEKEY:-}" ]; then
+            echo "::error title=Missing hCaptcha sitekey::NEXT_PUBLIC_WEB3FORMS_ENABLE_HCAPTCHA is true but NEXT_PUBLIC_WEB3FORMS_HCAPTCHA_SITEKEY is unset."
+            exit 1
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:

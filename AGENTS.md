@@ -19,6 +19,12 @@
 - The workflow uploads `out/` to GitHub Pages via `actions/deploy-pages` (no `configure-pages` step).
 - Define repo-level `Secrets/Variables` for `NEXT_PUBLIC_WEB3FORMS_*`; the workflow injects them as environment variables during the build.
 
+## SEO
+- Global metadata now covers canonical URLs, OpenGraph/Twitter cards, and AI-friendly meta hints sourced from `lib/seo.ts`.
+- Structured data (`Person`, `WebSite`, `WebPage`) is injected from `lib/seo.ts`; update values there if branding shifts.
+- Update `NEXT_PUBLIC_SITE_URL` (secret or env) when deploying to a custom domain so canonical links and the sitemap stay accurate.
+- `app/sitemap.ts` and `app/robots.ts` emit static files during export—no extra tooling required.
+
 ## Coding Style & Naming Conventions
 - Use TypeScript with React Server Components unless a client boundary is required (`'use client'` annotations).
 - Prefer functional components, Tailwind utility classes, and the established folder taxonomy.
