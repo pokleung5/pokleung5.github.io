@@ -7,20 +7,10 @@ import { AnimatedBackground } from '@/components/molecules';
 import { fadeInUp, staggerChildren } from '@/lib/animations';
 import { fetchLocalizedJson } from '@/lib/data';
 import { getTranslations, type Locale } from '@/lib/i18n';
-import type { Project } from '@/lib/types';
+import type { HeroCopy, Project } from '@/lib/types';
 
 type HeroProps = {
   locale?: Locale;
-};
-
-type HeroCopy = {
-  name: string;
-  headline: string;
-  summary: string;
-  ctaProjects: string;
-  ctaContact: string;
-  scrollPrompt: string;
-  error: string;
 };
 
 export function Hero({ locale = 'en' }: HeroProps = {}) {

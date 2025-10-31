@@ -6,7 +6,7 @@ import { SectionHeader, TimelineControls, TimelineItem } from '@/components/mole
 import { staggerChildren } from '@/lib/animations';
 import { fetchLocalizedJson } from '@/lib/data';
 import { getTranslations, type Locale } from '@/lib/i18n';
-import type { Experience } from '@/lib/types';
+import type { Experience, TimelineCopy } from '@/lib/types';
 
 type TimelineProps = {
   locale?: Locale;
@@ -14,7 +14,10 @@ type TimelineProps = {
 };
 
 export function Timeline({ locale = 'en', experiences: initialExperiences }: TimelineProps = {}) {
-  const timelineCopy = useMemo(() => getTranslations(locale).timeline, [locale]);
+  const timelineCopy = useMemo(
+    () => getTranslations(locale).timeline as TimelineCopy,
+    [locale]
+  );
   const hasInitialData = Boolean(initialExperiences && initialExperiences.length > 0);
   const [experiences, setExperiences] = useState<Experience[]>(initialExperiences ?? []);
   const [visibleCount, setVisibleCount] = useState(3);

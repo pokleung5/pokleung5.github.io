@@ -6,14 +6,17 @@ import { SectionHeader } from '@/components/molecules';
 import { fadeInUp, staggerChildren } from '@/lib/animations';
 import { fetchLocalizedJson } from '@/lib/data';
 import { getTranslations, type Locale } from '@/lib/i18n';
-import type { Testimonial } from '@/lib/types';
+import type { Testimonial, TestimonialsCopy } from '@/lib/types';
 
 type TestimonialsProps = {
   locale?: Locale;
 };
 
 export function Testimonials({ locale = 'en' }: TestimonialsProps = {}) {
-  const testimonialsCopy = useMemo(() => getTranslations(locale).testimonials, [locale]);
+  const testimonialsCopy = useMemo(
+    () => getTranslations(locale).testimonials as TestimonialsCopy,
+    [locale]
+  );
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

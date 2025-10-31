@@ -6,14 +6,17 @@ import { SectionHeader } from '@/components/molecules';
 import { fadeInUp, staggerChildren } from '@/lib/animations';
 import { fetchLocalizedJson } from '@/lib/data';
 import { getTranslations, type Locale } from '@/lib/i18n';
-import type { ImpactHighlight } from '@/lib/types';
+import type { ImpactHighlight, ImpactHighlightsCopy } from '@/lib/types';
 
 type ImpactHighlightsProps = {
   locale?: Locale;
 };
 
 export function ImpactHighlights({ locale = 'en' }: ImpactHighlightsProps = {}) {
-  const impactCopy = useMemo(() => getTranslations(locale).impactHighlights, [locale]);
+  const impactCopy = useMemo(
+    () => getTranslations(locale).impactHighlights as ImpactHighlightsCopy,
+    [locale]
+  );
   const [highlights, setHighlights] = useState<ImpactHighlight[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import { getTranslations, type Locale } from '@/lib/i18n';
+import type { FooterCopy } from '@/lib/types';
 
 type SiteFooterProps = {
   locale?: Locale;
 };
 
 export function SiteFooter({ locale = 'en' }: SiteFooterProps = {}) {
-  const footerCopy = getTranslations(locale).footer;
+  const footerCopy = getTranslations(locale).footer as FooterCopy;
   const socialLinks = [
     { label: footerCopy.links.github, href: 'https://github.com/pokleung5', Icon: Github },
     { label: footerCopy.links.linkedin, href: 'https://www.linkedin.com/in/pokleung5/', Icon: Linkedin },

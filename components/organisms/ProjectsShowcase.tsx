@@ -5,14 +5,17 @@ import { useEffect, useMemo, useState } from 'react';
 import { ProjectCarousel, ProjectFilters, SectionHeader } from '@/components/molecules';
 import { fetchLocalizedJson } from '@/lib/data';
 import { getTranslations, type Locale } from '@/lib/i18n';
-import type { Project, ProjectFilter } from '@/lib/types';
+import type { Project, ProjectFilter, ProjectsShowcaseCopy } from '@/lib/types';
 
 type ProjectsShowcaseProps = {
   locale?: Locale;
 };
 
 export function ProjectsShowcase({ locale = 'en' }: ProjectsShowcaseProps = {}) {
-  const projectsCopy = useMemo(() => getTranslations(locale).projectsShowcase, [locale]);
+  const projectsCopy = useMemo(
+    () => getTranslations(locale).projectsShowcase as ProjectsShowcaseCopy,
+    [locale]
+  );
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>('All');
   const [isLoading, setIsLoading] = useState(true);
