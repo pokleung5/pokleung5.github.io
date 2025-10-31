@@ -17,6 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: github-pages
     env:
       NEXT_PUBLIC_WEB3FORMS_ENDPOINT: ${{ secrets.NEXT_PUBLIC_WEB3FORMS_ENDPOINT || vars.NEXT_PUBLIC_WEB3FORMS_ENDPOINT }}
       NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || vars.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY }}
